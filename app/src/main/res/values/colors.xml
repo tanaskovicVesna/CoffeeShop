@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tintColor">#FFC107</color>
+    <color name="colorPrimary">#d6c3bc</color>
+    <color name="colorDialog">#FFF9C4</color>
+    <color name="colorPrimaryLight">#A1887F</color>
+    <color name="colorDark">#795548</color>
+    <color name="colorAccent">#e67e22</color>
+    <color name="colorPrimaryDark">#21201f</color>
+
+</resources>
