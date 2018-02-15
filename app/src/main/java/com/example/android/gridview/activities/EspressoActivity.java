@@ -8,29 +8,66 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.gridview.R;
+import com.example.android.gridview.filter.CustomInputFilter;
 
 import java.text.NumberFormat;
 
+import static com.example.android.gridview.R.string.quantity;
+
 public class EspressoActivity extends AppCompatActivity {
-    int quantity = 2;
+    int quantity =  1;
+    int quantity1 = 1;
+    int quantity2 = 1;
+    EditText nameField;
+    EditText cookiesQuantity;
+    EditText donutsQuantity;
+
+    CustomInputFilter check = new CustomInputFilter();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_espresso);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#ceae71"));
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#e5cb99"));
+        //hide soft keyboard on EditText
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        displayPricePerCup(70,30,50,10);
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setLogo(R.drawable.espresso);
         }
+        cookiesQuantity = (EditText)findViewById(R.id.cookies_quantity);
+        check.checkQuantityInput(cookiesQuantity);
+
+        donutsQuantity = (EditText)findViewById(R.id. donuts_quantity);
+        check.checkQuantityInput(donutsQuantity);
+    }
+
+    private void displayPricePerCup(int number, int cookies, int donuts, int toppings) {
+
+        TextView priceTextView = (TextView) findViewById(R.id.espresso_price);
+        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+
+        TextView cookiesTextView = (TextView) findViewById(R.id.cookies_price);
+        cookiesTextView.setText(NumberFormat.getCurrencyInstance().format(cookies));
+
+        TextView donutsTextView = (TextView) findViewById(R.id.donuts_price);
+        donutsTextView.setText(NumberFormat.getCurrencyInstance().format(donuts));
+
+        TextView toppingsTextView = (TextView) findViewById(R.id.toppings_price);
+        toppingsTextView.setText(NumberFormat.getCurrencyInstance().format(toppings));
     }
     /**
      * This method is called when the plus button is clicked.
@@ -50,12 +87,14 @@ public class EspressoActivity extends AppCompatActivity {
      * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if (quantity == 1) {
+        if (quantity <=0) {
+            quantity = 0;
             // Show an error message as a toast
             Toast.makeText(this,getString(R.string.decrement), Toast.LENGTH_SHORT).show();
             // Exit this method early because there's nothing left to do
             return;
         }
+
         quantity = quantity - 1;
         display(quantity);
     }
@@ -65,8 +104,8 @@ public class EspressoActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
 
-
-        EditText nameField = (EditText) findViewById(R.id.name_field);
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String name = nameField.getText().toString();
 
         // Figure out if the user wants whipped cream topping
@@ -83,9 +122,28 @@ public class EspressoActivity extends AppCompatActivity {
         CheckBox donutsCheckBox = (CheckBox) findViewById(R.id.donuts_checkbox);
         boolean hasDonuts = donutsCheckBox.isChecked();
 
-        // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCookies,hasDonuts);
+        cookiesQuantity = (EditText)findViewById(R.id.cookies_quantity);
 
+        donutsQuantity = (EditText)findViewById(R.id.donuts_quantity);
+
+        if(hasCookies){
+            if (cookiesQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCookies), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(cookiesQuantity.getText().toString());
+        }
+        if(hasDonuts){
+            if (donutsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputDonuts), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(donutsQuantity.getText().toString());
+        }
+
+        // Calculate the price
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCookies,hasDonuts,quantity1,quantity2);
+        displayTotal(price);
         // Display the order summary on the screen
         String message = createOrderSummary(name, price, hasWhippedCream, hasChocolate,hasCookies,hasDonuts);
 
@@ -98,21 +156,36 @@ public class EspressoActivity extends AppCompatActivity {
         }
         // displayMessage(message);
     }
-    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withCookies, boolean withDonuts) {
-        int basePrice = 5;
+    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withCookies, boolean withDonuts,int quantityCookies, int quantityDonuts) {
+        int basePrice = 70;
         if(addWhippedCream){
-            basePrice = basePrice + 1;
+            basePrice = basePrice + 10;
         }
         if(addChocolate){
-            basePrice = basePrice + 2;
+            basePrice = basePrice + 10;
         }
-        if(withCookies){
-            basePrice = basePrice + 3;
+        if(withCookies) {
+
+            if (quantityCookies == 0) {
+                quantityCookies = 0;
+            }
+        } else {
+            quantityCookies= 0;
+            cookiesQuantity.setText(R.string.quantity);
         }
+
         if(withDonuts){
-            basePrice = basePrice + 4;
+
+            if (quantityDonuts == 0) {
+                quantityDonuts = 0;
+            }
+        }else{
+            quantityDonuts = 0;
+            donutsQuantity.setText(R.string.quantity);
         }
-        return quantity *basePrice;
+
+        int totalPrice = quantity *basePrice + quantityCookies*30 + quantityDonuts*50;
+        return  totalPrice;
     }
 
 
@@ -131,10 +204,27 @@ public class EspressoActivity extends AppCompatActivity {
 
         CheckBox donutsCheckBox = (CheckBox) findViewById(R.id.donuts_checkbox);
         boolean hasDonuts = donutsCheckBox.isChecked();
+        cookiesQuantity = (EditText)findViewById(R.id.cookies_quantity);
 
+        donutsQuantity = (EditText)findViewById(R.id.donuts_quantity);
+
+        if(hasCookies){
+            if (cookiesQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCookies), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(cookiesQuantity.getText().toString());
+        }
+        if(hasDonuts){
+            if (donutsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputDonuts), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(donutsQuantity.getText().toString());
+        }
 
         // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCookies,hasDonuts);
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCookies,hasDonuts,quantity1,quantity2);
 
         // Display the price on the screen
         displayTotal(price);
@@ -158,7 +248,9 @@ public class EspressoActivity extends AppCompatActivity {
         priceMessage +="\n" + getString(R.string.order_summary_whipped_cream, addWhippedCream);
         priceMessage +="\n" + getString(R.string.order_summary_chocolate, addChocolate);
         priceMessage +="\n" + getString(R.string.order_summary_cookies, withCookies);
+        if(withCookies){priceMessage +="\n" + getString(R.string.order_summary_quantity_cookies, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_donuts, withDonuts);
+        if(withDonuts){priceMessage +="\n" + getString(R.string.order_summary_quantity_donuts, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_price, NumberFormat.getCurrencyInstance().format(price));
         priceMessage +="\n" + getString(R.string.thanks);
         return priceMessage;

@@ -18,136 +18,302 @@
             android:id="@+id/name_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/tintColor"
+            android:backgroundTint="@color/colorAccent"
             android:hint="@string/name"
             android:inputType="textCapWords"
             android:textColor="@color/colorDark"
-            android:textColorHint="@color/tintColor" />
+            android:textColorHint="@color/colorAccent" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/espresso"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/espresso_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toppings"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/toppings_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp">
+
+            <TextView
+                style="@style/HeaderTextStyle1"
+                android:layout_weight="1"
+                android:text="@string/quantity" />
+
+            <TextView
+                style="@style/HeaderTextStyle1"
+                android:layout_weight="1"
+                android:text="@string/toppings" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#e5cb99"
+                    android:onClick="decrement"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/minuscircle" />
+
+
+                <TextView
+                    android:id="@+id/quantity_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#e5cb99"
+                    android:onClick="increment"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pluscircle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1.2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/whipped_cream_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:buttonTint="@color/colorAccent"
+                        android:paddingLeft="6dp"
+                        android:text="@string/whipped_cream"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chocolate_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:buttonTint="@color/colorAccent"
+                        android:paddingLeft="6dp"
+                        android:text="@string/chocolate"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <TextView
             style="@style/HeaderTextStyle"
             android:text="@string/extras" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
                 android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/cookies_checkbox"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:buttonTint="@color/tintColor"
-                    android:paddingLeft="8dp"
-                    android:text="@string/cookies"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
+                    android:layout_weight="1.5"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/coffeecookies" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:id="@+id/cookies_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:buttonTint="@color/colorAccent"
+                            android:paddingLeft="6dp"
+                            android:text="@string/cookies"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/cookies_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/cookies_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorAccent"
+                        android:hint="@string/quantity"
+                        android:inputType="number"
+                        android:textColor="@color/colorDark"
+                        android:textColorHint="@color/colorAccent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/coffeecookies" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
                 android:orientation="horizontal">
 
-
-                <CheckBox
-                    android:id="@+id/donuts_checkbox"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/tintColor"
-                    android:layout_gravity="center"
-                    android:paddingLeft="8dp"
-                    android:text="@string/donuts"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
+                    android:layout_weight="1.5"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/donuts" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
+                        <CheckBox
+                            android:id="@+id/donuts_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:buttonTint="@color/colorAccent"
+                            android:paddingLeft="6dp"
+                            android:text="@string/donuts"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/donuts_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/donuts_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorAccent"
+                        android:hint="@string/quantity"
+                        android:inputType="number"
+                        android:textColor="@color/colorDark"
+                        android:textColorHint="@color/colorAccent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/donuts" />
+
+                </LinearLayout>
             </LinearLayout>
-        <TextView
-            style="@style/HeaderTextStyle"
-            android:text="@string/espresso" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#ceae71">
-
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="decrement"
-                android:background="#ceae71"
-                android:src="@drawable/minuscircle" />
-
-
-            <TextView
-                android:id="@+id/quantity_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:layout_gravity="center"
-                android:text="2"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#ceae71"
-                android:onClick="increment"
-                android:src="@drawable/pluscircle" />
-
-
-        </LinearLayout>
-        <TextView
-            style="@style/HeaderTextStyle"
-            android:text="@string/toppings" />
-
-        <CheckBox
-            android:id="@+id/whipped_cream_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/tintColor"
-            android:paddingLeft="8dp"
-            android:text="@string/whipped_cream"
-            android:textColor="@color/colorDark"
-            android:textSize="16sp" />
-
-        <CheckBox
-            android:id="@+id/chocolate_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/tintColor"
-            android:paddingLeft="8dp"
-            android:text="@string/chocolate"
-            android:textColor="@color/colorDark"
-            android:textSize="16sp" />
-
 
         </LinearLayout>
 
@@ -185,4 +351,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

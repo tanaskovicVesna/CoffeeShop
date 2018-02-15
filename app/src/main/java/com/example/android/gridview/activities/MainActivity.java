@@ -16,10 +16,12 @@ import com.example.android.gridview.R;
 import com.example.android.gridview.adapter.CustomGrid;
 import com.example.android.gridview.dialog.AboutDialog;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     GridView grid;
-    String[] web = {"Traditional Coffee", "Espresso", "Macchiato", "Nescafe", "Cappuccino", "IcedCoffee" };
+    ArrayList<String> web = new ArrayList<>();
     int[] imageId = {
             R.drawable.turkishcoffee, R.drawable.espresso,  R.drawable.macchiato, R.drawable.nescafe,
             R.drawable.cappucino,  R.drawable.icedcoffee};
@@ -30,6 +32,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        web.add(getString(R.string.traditional_coffee));
+        web.add(getString(R.string.espresso));
+        web.add(getString(R.string.macchiato));
+        web.add(getString(R.string.nescafe));
+        web.add(getString(R.string.cappuccino));
+        web.add(getString(R.string.icedCoffe));
         CustomGrid adapter = new CustomGrid(MainActivity.this, web, imageId, gridColor);
         grid=(GridView)findViewById(R.id.grid);
         grid.setAdapter(adapter);

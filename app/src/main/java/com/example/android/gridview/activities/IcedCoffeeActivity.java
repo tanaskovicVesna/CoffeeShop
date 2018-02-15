@@ -8,18 +8,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.gridview.R;
+import com.example.android.gridview.filter.CustomInputFilter;
 
 import java.text.NumberFormat;
 
+
 public class IcedCoffeeActivity extends AppCompatActivity {
 
-    int quantity = 2;
+    int quantity =  1;
+    int quantity1 = 1;
+    int quantity2 = 1;
+    EditText nameField;
+    EditText lemonpieQuantity;
+    EditText pancakesQuantity;
+
+    CustomInputFilter check = new CustomInputFilter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +37,35 @@ public class IcedCoffeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_iced_coffee);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#A1887F"));
 
+        //hide soft keyboard on EditText
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        displayPricePerCup(70,100,50);
+
+
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setLogo(R.drawable.icedcoffee);
         }
+
+        lemonpieQuantity = (EditText)findViewById(R.id.lemonpie_quantity);
+        check.checkQuantityInput(lemonpieQuantity);
+
+        pancakesQuantity = (EditText)findViewById(R.id. pancakes_quantity);
+        check.checkQuantityInput(pancakesQuantity);
+    }
+
+    private void displayPricePerCup(int number, int lemonpie, int pancakes) {
+        TextView priceTextView = (TextView) findViewById(R.id.iced_price);
+        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+
+        TextView lemonpieTextView = (TextView) findViewById(R.id.lemonpie_price);
+        lemonpieTextView.setText(NumberFormat.getCurrencyInstance().format(lemonpie));
+
+        TextView pancakesTextView = (TextView) findViewById(R.id.pancakes_price);
+        pancakesTextView.setText(NumberFormat.getCurrencyInstance().format(pancakes));
     }
     /**
      * This method is called when the plus button is clicked.
@@ -51,12 +85,14 @@ public class IcedCoffeeActivity extends AppCompatActivity {
      * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if (quantity == 1) {
+        if (quantity <=0) {
+            quantity = 0;
             // Show an error message as a toast
             Toast.makeText(this,getString(R.string.decrement), Toast.LENGTH_SHORT).show();
             // Exit this method early because there's nothing left to do
             return;
         }
+
         quantity = quantity - 1;
         display(quantity);
     }
@@ -66,8 +102,8 @@ public class IcedCoffeeActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
 
-
-        EditText nameField = (EditText) findViewById(R.id.name_field);
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String name = nameField.getText().toString();
 
         // Figure out if the user wants whipped cream topping
@@ -78,9 +114,29 @@ public class IcedCoffeeActivity extends AppCompatActivity {
         CheckBox pancakesCheckBox = (CheckBox) findViewById(R.id.pancakes_checkbox);
         boolean hasPancakes = pancakesCheckBox.isChecked();
 
-        // Calculate the price
-        int price = calculatePrice(hasLemonpie,hasPancakes);
+        lemonpieQuantity = (EditText)findViewById(R.id.lemonpie_quantity);
 
+
+        pancakesQuantity =(EditText)findViewById(R.id.pancakes_quantity);
+
+        if(hasLemonpie){
+            if (lemonpieQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputLemonpie), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(lemonpieQuantity.getText().toString());
+        }
+        if(hasPancakes){
+            if (pancakesQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputPancakes), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(pancakesQuantity.getText().toString());
+        }
+
+        // Calculate the price
+        int price = calculatePrice(hasLemonpie,hasPancakes,quantity1,quantity2);
+        displayTotal(price);
         // Display the order summary on the screen
         String message = createOrderSummary(name, price, hasLemonpie, hasPancakes);
 
@@ -93,15 +149,29 @@ public class IcedCoffeeActivity extends AppCompatActivity {
         }
         // displayMessage(message);
     }
-    private int calculatePrice(boolean addLemonpie, boolean addPancakes) {
-        int basePrice = 5;
+    private int calculatePrice(boolean addLemonpie, boolean addPancakes, int quantityLemonpie, int quantityPancakes) {
+        int basePrice = 70;
         if(addLemonpie){
-            basePrice = basePrice + 1;
+            if (quantityLemonpie == 0) {
+                quantityLemonpie = 0;
+            }
+        } else {
+            quantityLemonpie = 0;
+            lemonpieQuantity.setText(R.string.quantity);
         }
         if(addPancakes){
-            basePrice = basePrice + 2;
+
+            if (quantityPancakes == 0) {
+                quantityPancakes = 0;
+            }
+        }else{
+            quantityPancakes = 0;
+           pancakesQuantity.setText(R.string.quantity);
         }
-        return quantity *basePrice;
+
+        int totalPrice = quantity *basePrice + quantityLemonpie*100 + quantityPancakes*50;
+        return  totalPrice;
+
     }
 
     public void showTotal(View view) {
@@ -114,9 +184,28 @@ public class IcedCoffeeActivity extends AppCompatActivity {
         CheckBox pancakesCheckBox = (CheckBox) findViewById(R.id.pancakes_checkbox);
         boolean hasPancakes = pancakesCheckBox.isChecked();
 
-        // Calculate the price
-        int price = calculatePrice(hasLemonpie,hasPancakes);
+        lemonpieQuantity = (EditText)findViewById(R.id.lemonpie_quantity);
 
+
+        pancakesQuantity =(EditText)findViewById(R.id.pancakes_quantity);
+
+        if(hasLemonpie){
+            if (lemonpieQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputLemonpie), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(lemonpieQuantity.getText().toString());
+        }
+        if(hasPancakes){
+            if (pancakesQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputPancakes), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(pancakesQuantity.getText().toString());
+        }
+
+        // Calculate the price
+        int price = calculatePrice(hasLemonpie,hasPancakes,quantity1,quantity2);
 
         // Display the price on the screen
         displayTotal(price);
@@ -136,8 +225,9 @@ public class IcedCoffeeActivity extends AppCompatActivity {
         priceMessage +="\n" + getString(R.string.icedCoffe);
         priceMessage +="\n" + getString(R.string.order_summary_quantity, quantity);
         priceMessage +="\n" + getString(R.string.order_summary_lemonpie, addLemonpie);
+        if(addLemonpie){priceMessage +="\n" + getString(R.string.order_summary_quantity_lemonpie, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_pancakes, addPancakes);
-        priceMessage +="\n" + getString(R.string.order_summary_quantity, quantity);
+        if(addPancakes){ priceMessage +="\n" + getString(R.string.order_summary_quantity_pancakes, quantity2);;}
         priceMessage +="\n" + getString(R.string.order_summary_price, NumberFormat.getCurrencyInstance().format(price));
         priceMessage +="\n" + getString(R.string.thanks);
         return priceMessage;

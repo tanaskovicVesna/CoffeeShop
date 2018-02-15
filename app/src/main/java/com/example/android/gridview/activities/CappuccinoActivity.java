@@ -8,30 +8,64 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.gridview.R;
+import com.example.android.gridview.filter.CustomInputFilter;
 
 import java.text.NumberFormat;
 
+
 public class CappuccinoActivity extends AppCompatActivity{
 
-    int quantity = 2;
+    int quantity =  1;
+    int quantity1 = 1;
+    int quantity2 = 1;
+    EditText nameField;
+    EditText macaronsQuantity;
+    EditText cakepopsQuantity;
+    CustomInputFilter check = new CustomInputFilter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cappuccino);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#F5F5F5"));
+        //hide soft keyboard on EditText
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        displayPricePerCup(70,30,20,10);
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setLogo(R.drawable.cappucino);
         }
+        macaronsQuantity = (EditText)findViewById(R.id.macarons_quantity);
+        check.checkQuantityInput(macaronsQuantity);
+
+        cakepopsQuantity = (EditText)findViewById(R.id. cakepops_quantity);
+        check.checkQuantityInput(cakepopsQuantity);
+    }
+
+    private void displayPricePerCup(int number, int macarons, int cakepops, int toppings) {
+
+        TextView priceTextView = (TextView) findViewById(R.id.cappucino_price);
+        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+
+        TextView macaronsTextView = (TextView) findViewById(R.id.macarons_price);
+        macaronsTextView.setText(NumberFormat.getCurrencyInstance().format(macarons));
+
+        TextView cakepopsTextView = (TextView) findViewById(R.id.cakepops_price);
+        cakepopsTextView.setText(NumberFormat.getCurrencyInstance().format(cakepops));
+
+        TextView toppingsTextView = (TextView) findViewById(R.id.toppings_price);
+        toppingsTextView.setText(NumberFormat.getCurrencyInstance().format(toppings));
     }
     /**
      * This method is called when the plus button is clicked.
@@ -51,12 +85,14 @@ public class CappuccinoActivity extends AppCompatActivity{
      * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if (quantity == 1) {
+        if (quantity <=0) {
+            quantity = 0;
             // Show an error message as a toast
             Toast.makeText(this,getString(R.string.decrement), Toast.LENGTH_SHORT).show();
             // Exit this method early because there's nothing left to do
             return;
         }
+
         quantity = quantity - 1;
         display(quantity);
     }
@@ -66,8 +102,8 @@ public class CappuccinoActivity extends AppCompatActivity{
      */
     public void submitOrder(View view) {
 
-
-        EditText nameField = (EditText) findViewById(R.id.name_field);
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String name = nameField.getText().toString();
 
         // Figure out if the user wants whipped cream topping
@@ -84,10 +120,28 @@ public class CappuccinoActivity extends AppCompatActivity{
         CheckBox cakepopsCheckBox = (CheckBox) findViewById(R.id.cake_pops_checkbox);
         boolean hasCakepops = cakepopsCheckBox.isChecked();
 
+        macaronsQuantity = (EditText)findViewById(R.id.macarons_quantity);
+
+        cakepopsQuantity = (EditText)findViewById(R.id.cakepops_quantity);
+
+        if(hasMacarons){
+            if (macaronsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputMacarons), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(macaronsQuantity.getText().toString());
+        }
+        if(hasCakepops){
+            if (cakepopsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCakepops), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(cakepopsQuantity.getText().toString());
+        }
 
         // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasMacarons,hasCakepops);
-
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasMacarons,hasCakepops,quantity1,quantity2);
+        displayTotal(price);
         // Display the order summary on the screen
         String message = createOrderSummary(name, price, hasWhippedCream, hasChocolate,hasMacarons,hasCakepops);
 
@@ -100,21 +154,36 @@ public class CappuccinoActivity extends AppCompatActivity{
         }
         // displayMessage(message);
     }
-    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withMacarons, boolean withCakepops) {
-        int basePrice = 5;
+    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withMacarons, boolean withCakepops, int quantityMacarons, int quantityCakepops) {
+        int basePrice = 70;
         if(addWhippedCream){
-            basePrice = basePrice + 1;
+            basePrice = basePrice + 10;
         }
         if(addChocolate){
-            basePrice = basePrice + 2;
+            basePrice = basePrice + 10;
         }
-        if(withMacarons){
-            basePrice = basePrice + 3;
+        if(withMacarons) {
+
+            if (quantityMacarons == 0) {
+               quantityMacarons = 0;
+            }
+        } else {
+            quantityMacarons= 0;
+            macaronsQuantity.setText(R.string.quantity);
         }
+
         if(withCakepops){
-            basePrice = basePrice + 4;
+
+            if (quantityCakepops == 0) {
+                quantityCakepops = 0;
+            }
+        }else{
+           quantityCakepops = 0;
+         cakepopsQuantity.setText(R.string.quantity);
         }
-        return quantity *basePrice;
+
+        int totalPrice = quantity *basePrice + quantityMacarons*30 + quantityCakepops*20;
+        return  totalPrice;
     }
 
 
@@ -134,9 +203,27 @@ public class CappuccinoActivity extends AppCompatActivity{
         CheckBox cakepopsCheckBox = (CheckBox) findViewById(R.id.cake_pops_checkbox);
         boolean hasCakepops = cakepopsCheckBox.isChecked();
 
+        macaronsQuantity = (EditText)findViewById(R.id.macarons_quantity);
+
+        cakepopsQuantity = (EditText)findViewById(R.id.cakepops_quantity);
+
+        if(hasMacarons){
+            if (macaronsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputMacarons), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(macaronsQuantity.getText().toString());
+        }
+        if(hasCakepops){
+            if (cakepopsQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCakepops), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(cakepopsQuantity.getText().toString());
+        }
 
         // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasMacarons,hasCakepops);
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasMacarons,hasCakepops,quantity1,quantity2);
 
         // Display the price on the screen
         displayTotal(price);
@@ -160,7 +247,9 @@ public class CappuccinoActivity extends AppCompatActivity{
         priceMessage +="\n" + getString(R.string.order_summary_whipped_cream, addWhippedCream);
         priceMessage +="\n" + getString(R.string.order_summary_chocolate,addChocolate);
         priceMessage +="\n" + getString(R.string.order_summary_macarons, withMacarons);
+        if(withMacarons){priceMessage +="\n" + getString(R.string.order_summary_quantity_macarons, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_cakepops, withCakepops);
+        if(withCakepops){priceMessage +="\n" + getString(R.string.order_summary_quantity_cakepops, quantity2);}
         priceMessage +="\n" + getString(R.string.order_summary_price, NumberFormat.getCurrencyInstance().format(price));
         priceMessage +="\n" + getString(R.string.thanks);
         return priceMessage;

@@ -14,7 +14,7 @@ import static com.example.android.gridview.R.id.grid;
 
 public class SplashScreenActivity extends Activity {
 
-    private static final int SPLASH_TIME_OUT = 2000; // splash ce biti vidljiv minimum SPLASH_TIME_OUT milisekundi
+    private static final int SPLASH_TIME_OUT = 1500; // splash ce biti vidljiv minimum SPLASH_TIME_OUT milisekundi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

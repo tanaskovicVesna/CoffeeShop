@@ -18,10 +18,10 @@
         <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
         <string name="chocolate">Chocolate</string>
         <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
-        <string name="quantity">Quantity</string>
+        <string name="quantity">quantity</string>
 
         <string name="increment">You cannot have more than 100 coffees</string>
-        <string name="decrement"> You cannot have less than 1 coffee</string>
+        <string name="decrement"> Enter proper quantity </string>
         <!--
            Subject line for the order summary email. It will be in the format of
            "Just Java order for Amy" where Amy is the user's name. [CHAR LIMIT=NONE]
@@ -50,8 +50,19 @@
           "Quantity: 2", where 2 is the number of cups ordered. [CHAR LIMIT=NONE]
         -->
         <string name="order_summary_quantity">Quantity: <xliff:g id="quantity" example="2">%d</xliff:g></string>
-
-        <!--
+        <string name="order_summary_quantity_water">Quantity:  <xliff:g id="quantityWater" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_delight">Quantity: <xliff:g id="quantityDelight" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_lemonpie">Quantity:  <xliff:g id="quantityLemonpie" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_pancakes">Quantity:  <xliff:g id="quantityPancakes" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_macarons">Quantity:  <xliff:g id="quantityMacarons" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_cakepops">Quantity:  <xliff:g id="quantityCakepops" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_cookies">Quantity:  <xliff:g id="quantityCookies" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_donuts">Quantity:  <xliff:g id="quantityDonuts" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_muffins">Quantity:  <xliff:g id="quantityMuffins" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_moonpie">Quantity:  <xliff:g id="quantityMoonpie" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_cheesecake">Quantity:  <xliff:g id="quantityCheesecake" example="2">%d</xliff:g></string>
+        <string name="order_summary_quantity_pumpkinpie">Quantity:  <xliff:g id="quantityPumpkinpie" example="2">%d</xliff:g></string>
+            <!--
           Total price for the order summary. It will be shown in the format of
           "Total: $10" where $10 is the price. [CHAR LIMIT=NONE]
         -->
@@ -67,7 +78,7 @@
     <string name="extras">Extras</string>
     <string name="total">Total</string>
     <string name="mineralwater">Mineral water</string>
-    <string name="delight">Delight \t \t \t</string>
+    <string name="delight">Delight </string>
     <string name="order_summary_mineral_water">With mineral water? <xliff:g id="addWhippedCream" example="true">%b</xliff:g></string>
     <string name="order_summary_delight">With delights? <xliff:g id="addChocolate" example="true">%b</xliff:g></string>
     <string name="cookies">Cookies</string>
@@ -91,6 +102,21 @@
     <string name="order_summary_lemonpie">With Lemonpie? <xliff:g id="withLemonpie" example="true">%b</xliff:g></string>
     <string name="order_summary_pancakes">With Pancakes? <xliff:g id="withPancakes" example="true">%b</xliff:g></string>
     <string name="order_summary_macarons">With Macarons? <xliff:g id="withMacarons" example="true">%b</xliff:g></string>
-    <string name="order_summary_cakepops">With PCake Pops? <xliff:g id="withCakepops" example="true">%b</xliff:g></string>
+    <string name="order_summary_cakepops">With Cake Pops? <xliff:g id="withCakepops" example="true">%b</xliff:g></string>
+    <string name="input">Enter quantity!</string>
+    <string name="checkInputWater">You did not enter quantity of Mineral water</string>
+    <string name="checkInputDelight">You did not enter quantity of Delight</string>
+    <string name="checkInputLemonpie">You did not enter quantity of Lemonpie</string>
+    <string name="checkInputPancakes">You did not enter quantity of pancakes</string>
+    <string name="checkInputMacarons">You did not enter quantity of Macarons</string>
+    <string name="checkInputCakepops">You did not enter quantity of Cake Pops</string>
+    <string name="checkInputCookies">You did not enter quantity of Cookies</string>
+    <string name="checkInputDonuts">You did not enter quantity of Donuts</string>
+    <string name="checkInputMuffins">You did not enter quantity of Muffins</string>
+    <string name="checkInputMoonpie">You did not enter quantity of Moonpie</string>
+    <string name="checkInputCheesecake">You did not enter quantity of Cheesecake</string>
+    <string name="checkInputPumpkinpie">You did not enter quantity of Pumpkinpie</string>
+
+
 
 </resources>

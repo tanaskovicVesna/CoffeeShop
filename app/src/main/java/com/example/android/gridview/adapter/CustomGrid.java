@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.android.gridview.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Tanaskovic on 1/13/2018.
  */
@@ -18,20 +21,20 @@ import com.example.android.gridview.R;
 public class CustomGrid extends BaseAdapter {
 
     private Context mContext;
-    private final String[] web;
     private final int[] Imageid;
     private final String[] gridColor;
+    private  List<String> mWeb = new ArrayList<>();
 
-    public CustomGrid(Context c, String[] web, int[] imageid, String[] gridColor) {
+    public CustomGrid(Context c, ArrayList<String> web, int[] imageid, String[] gridColor) {
         mContext = c;
-        this.web = web;
+        mWeb = web;
         Imageid = imageid;
         this.gridColor = gridColor;
     }
 
     @Override
     public int getCount() {
-        return web.length;
+        return mWeb.size();
     }
 
     @Override
@@ -56,7 +59,7 @@ public class CustomGrid extends BaseAdapter {
             grid = inflater.inflate(R.layout.grid_single, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
             ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
-            textView.setText(web[position]);
+            textView.setText(mWeb.get(position));
             imageView.setImageResource(Imageid[position]);
             grid.setBackgroundColor(Color.parseColor(gridColor[position]));
         } else {

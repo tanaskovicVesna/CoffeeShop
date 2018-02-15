@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Title for the application. [CHAR LIMIT=12] -->
+    <string name="app_name">Ресторан кафе</string>
+    <string name="espresso">Еспресо</string>
+    <string name="macchiato">Макијато</string>
+    <string name="icedCoffe">Ледена кафа</string>
+    <string name="cappuccino">Капућино</string>
+    <string name="nescafe">Нескафа</string>
+    <string name="traditional_coffee">Домаћа кафа</string>
+
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="name">Име</string>
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="toppings">Преливи</string>
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="whipped_cream">Шлаг крем</string>
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="chocolate">Чоколада</string>
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="quantity">Количина</string>
+
+    <string name="increment">Не можете наручити више од 100 кафа</string>
+    <string name="decrement">Унесите одговарајућу количину</string>
+    <!--
+       Subject line for the order summary email. It will be in the format of
+       "Just Java order for Amy" where Amy is the user's name. [CHAR LIMIT=NONE]
+     -->
+    <string name="order_summary_email_subject">Кафетерија поручује за  <xliff:g id="name" example="Vesna">%s</xliff:g></string>
+
+    <!--
+      Name for the order summary. It will be shown in the format of "Name: Amy" where Amy is the
+      user's name. [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_name">Име: <xliff:g id="name" example="Vesna">%s</xliff:g></string>
+    <!--
+    Whipped cream topping for the order summary. It will be shown in the format of
+    "Add whipped cream? true" or "Add whipped cream? false". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_whipped_cream">Са шлаг кремом? <xliff:g id="addWhippedCream" example="true">%b</xliff:g></string>
+
+    <!--
+      Chocolate topping for the order summary. It will be shown in the format of
+      "Add chocolate? true" or "Add chocolate? false". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_chocolate">Са чоколадом? <xliff:g id="addChocolate" example="true">%b</xliff:g></string>
+
+    <!--
+      Quantity of coffee cups for the order summary. It will be shown in the format of
+      "Quantity: 2", where 2 is the number of cups ordered. [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_quantity">Количина: <xliff:g id="quantity" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_water">Количина:  <xliff:g id="quantityWater" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_delight">Количина: <xliff:g id="quantityDelight" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_lemonpie">Количина:  <xliff:g id="quantityLemonpie" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_pancakes">Количина:  <xliff:g id="quantityPancakes" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_macarons">Количина:  <xliff:g id="quantityMacarons" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_cakepops">Количина:  <xliff:g id="quantityCakepops" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_cookies">Количина:  <xliff:g id="quantityCookies" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_donuts">Количина:  <xliff:g id="quantityDonuts" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_muffins">Количина:  <xliff:g id="quantityMuffins" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_moonpie">Количина:  <xliff:g id="quantityMoonpie" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_cheesecake">Количина:  <xliff:g id="quantityCheesecake" example="2">%d</xliff:g></string>
+    <string name="order_summary_quantity_pumpkinpie">Количина:  <xliff:g id="quantityPumpkinpie" example="2">%d</xliff:g></string>
+    <!--
+  Total price for the order summary. It will be shown in the format of
+  "Total: $10" where $10 is the price. [CHAR LIMIT=NONE]
+-->
+    <string name="order_summary_price">Укупно:  <xliff:g id="price" example="$10">%s</xliff:g></string>
+
+    <!-- Thank you message for the order summary. [CHAR LIMIT=NONE] -->
+    <string name="thanks">Хвала!</string>
+    <string name="оrder">поруџбина</string>
+    <string name="dialog_about_app">О апликацији</string>
+    <string name="dialog_about_yes">Откажи</string>
+    <string name="message">Весна Танасковић је направила ову апликацију</string>
+    <string name="about">О апликацији</string>
+    <string name="extras">Додатна понуда</string>
+    <string name="total">Укупно</string>
+    <string name="mineralwater">Кисела вода</string>
+    <string name="delight">Ратлук </string>
+    <string name="order_summary_mineral_water">Са киселом водом? <xliff:g id="addWhippedCream" example="true">%b</xliff:g></string>
+    <string name="order_summary_delight">Са ратлуком? <xliff:g id="addChocolate" example="true">%b</xliff:g></string>
+    <string name="cookies">Колачићи</string>
+    <string name="macarons">Макаронс</string>
+    <string name="donuts">Крофне</string>
+    <string name="order_summary_donuts">Са крофном?<xliff:g id="withDonuts" example="true">%b</xliff:g></string>
+    <string name="order_summary_cookies">Са колачићима? <xliff:g id="withCookies" example="true">%b</xliff:g></string>
+    <string name="muffins">Mафини</string>
+    <string name="pancakes">Палачинке</string>
+    <string name="order_summary_muffins">Са мафинима? <xliff:g id="withMuffins" example="true">%b</xliff:g></string>
+    <string name="moonpie">Чококолачи</string>
+    <string name="order_summary_moonpie">Са чококолачима? <xliff:g id="withMoonpie" example="true">%b</xliff:g></string>
+    <string name="cheesecake">Чизкејк</string>
+    <string name="pumpkinpie">Бундевара</string>
+    <string name="order_summary_cheesecake">Са чизкејком? <xliff:g id="withCheesecake" example="true">%b</xliff:g></string>
+    <string name="order_summary_pumpkinpie">Са бундеваром? <xliff:g id="withPumpkinpie" example="true">%b</xliff:g></string>
+    <string name="applepie">Пита од јабуке</string>
+    <string name="lemonpie">Лемонкејк</string>
+    <string name="fruitpie">Воћна пита</string>
+    <string name="cakepops">Попси</string>
+    <string name="order_summary_lemonpie">Са лемонкејком? <xliff:g id="withLemonpie" example="true">%b</xliff:g></string>
+    <string name="order_summary_pancakes">Са палачинкама? <xliff:g id="withPancakes" example="true">%b</xliff:g></string>
+    <string name="order_summary_macarons">Са макаронсима? <xliff:g id="withMacarons" example="true">%b</xliff:g></string>
+    <string name="order_summary_cakepops">Са попсима? <xliff:g id="withCakepops" example="true">%b</xliff:g></string>
+    <string name="input">Унесите количину!</string>
+    <string name="checkInputWater">Нисте унели количину за киселу воду</string>
+    <string name="checkInputDelight">Нисте унели количину за ратлук</string>
+    <string name="checkInputLemonpie">Нисте унели количину за лемонкејк</string>
+    <string name="checkInputPancakes">Нисте унели количину за палачинке</string>
+    <string name="checkInputMacarons">Нисте унели количину за макаронсе</string>
+    <string name="checkInputCakepops">Нисте унели количину за  попсе</string>
+    <string name="checkInputCookies">Нисте унели количину за  колачиће</string>
+    <string name="checkInputDonuts">YНисте унели количину за  крофне</string>
+    <string name="checkInputMuffins">Нисте унели количину за  мафине</string>
+    <string name="checkInputMoonpie">Нисте унели количину за чококолаче</string>
+    <string name="checkInputCheesecake">Нисте унели количину за чизкејк</string>
+    <string name="checkInputPumpkinpie">Нисте унели количину за бундевару</string>
+
+
+
+</resources>

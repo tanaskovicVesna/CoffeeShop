@@ -8,29 +8,63 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.gridview.R;
+import com.example.android.gridview.filter.CustomInputFilter;
 
 import java.text.NumberFormat;
 
 public class NescafeActivity extends AppCompatActivity {
-    int quantity;
+    int quantity =  1;
+    int quantity1 = 1;
+    int quantity2 = 1;
+    EditText nameField;
+    EditText cheesecakeQuantity;
+    EditText pumpkinpieQuantity;
+    CustomInputFilter check = new CustomInputFilter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nescafe);
         getWindow().getDecorView().setBackgroundColor(Color.parseColor("#f9e0bd"));
+        //hide soft keyboard on EditText
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        displayPricePerCup(70,60,60,10);
+
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setLogo(R.drawable.nescafe);
         }
+        cheesecakeQuantity = (EditText)findViewById(R.id.cheesecake_quantity);
+        check.checkQuantityInput(cheesecakeQuantity);
+
+        pumpkinpieQuantity = (EditText)findViewById(R.id. pumpkinpie_quantity);
+        check.checkQuantityInput(pumpkinpieQuantity);
+    }
+
+    private void displayPricePerCup(int number, int cheesecake, int pumpkinpie, int toppings) {
+
+        TextView priceTextView = (TextView) findViewById(R.id.nescafe_price);
+        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+
+        TextView cheesecakeTextView = (TextView) findViewById(R.id.cheesecake_price);
+        cheesecakeTextView.setText(NumberFormat.getCurrencyInstance().format(cheesecake));
+
+        TextView pumpkinpieTextView = (TextView) findViewById(R.id.pumpkinpie_price);
+        pumpkinpieTextView.setText(NumberFormat.getCurrencyInstance().format(pumpkinpie));
+
+        TextView toppingsTextView = (TextView) findViewById(R.id.toppings_price);
+        toppingsTextView.setText(NumberFormat.getCurrencyInstance().format(toppings));
     }
     /**
      * This method is called when the plus button is clicked.
@@ -50,12 +84,14 @@ public class NescafeActivity extends AppCompatActivity {
      * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if (quantity == 1) {
+        if (quantity <=0) {
+            quantity = 0;
             // Show an error message as a toast
             Toast.makeText(this,getString(R.string.decrement), Toast.LENGTH_SHORT).show();
             // Exit this method early because there's nothing left to do
             return;
         }
+
         quantity = quantity - 1;
         display(quantity);
     }
@@ -66,7 +102,8 @@ public class NescafeActivity extends AppCompatActivity {
     public void submitOrder(View view) {
 
 
-        EditText nameField = (EditText) findViewById(R.id.name_field);
+        nameField = (EditText) findViewById(R.id.name_field);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String name = nameField.getText().toString();
 
         // Figure out if the user wants whipped cream topping
@@ -83,8 +120,28 @@ public class NescafeActivity extends AppCompatActivity {
         CheckBox pumpkinpieCheckBox = (CheckBox) findViewById(R.id.pumpkinpie_checkbox);
         boolean hasPumpkinpie = pumpkinpieCheckBox.isChecked();
 
+        cheesecakeQuantity = (EditText)findViewById(R.id.cheesecake_quantity);
+
+        pumpkinpieQuantity = (EditText)findViewById(R.id.pumpkinpie_quantity);
+
+        if(hasCheesecake){
+            if (cheesecakeQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCheesecake), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(cheesecakeQuantity.getText().toString());
+        }
+        if(hasPumpkinpie){
+            if (pumpkinpieQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputPumpkinpie), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(pumpkinpieQuantity.getText().toString());
+        }
+
         // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCheesecake,hasPumpkinpie);
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCheesecake,hasPumpkinpie,quantity1,quantity2);
+        displayTotal(price);
 
         // Display the order summary on the screen
         String message = createOrderSummary(name, price, hasWhippedCream, hasChocolate,hasCheesecake,hasPumpkinpie);
@@ -98,21 +155,35 @@ public class NescafeActivity extends AppCompatActivity {
         }
         // displayMessage(message);
     }
-    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withCheesecake, boolean withPumpkinpie) {
-        int basePrice = 5;
+    private int calculatePrice(boolean addWhippedCream, boolean addChocolate, boolean withCheesecake, boolean withPumpkinpie, int quantityCheesecake, int quantityPumpkinpie) {
+        int basePrice = 70;
         if(addWhippedCream){
-            basePrice = basePrice + 1;
+            basePrice = basePrice + 10;
         }
         if(addChocolate){
-            basePrice = basePrice + 2;
+            basePrice = basePrice + 10;
         }
         if(withCheesecake){
-            basePrice = basePrice + 3;
+            if (quantityCheesecake == 0) {
+               quantityCheesecake = 0;
+            }
+        } else {
+            quantityCheesecake= 0;
+            cheesecakeQuantity.setText(R.string.quantity);
         }
+
         if(withPumpkinpie){
-            basePrice = basePrice + 4;
+
+            if (quantityPumpkinpie == 0) {
+                quantityPumpkinpie = 0;
+            }
+        }else{
+            quantityPumpkinpie = 0;
+            pumpkinpieQuantity.setText(R.string.quantity);
         }
-        return quantity *basePrice;
+
+        int totalPrice = quantity *basePrice + quantityCheesecake*60 + quantityPumpkinpie*60;
+        return  totalPrice;
     }
 
 
@@ -133,8 +204,27 @@ public class NescafeActivity extends AppCompatActivity {
         CheckBox pumpkinpieCheckBox = (CheckBox) findViewById(R.id.pumpkinpie_checkbox);
         boolean hasPumpkinpie = pumpkinpieCheckBox.isChecked();
 
+        cheesecakeQuantity = (EditText)findViewById(R.id.cheesecake_quantity);
+
+        pumpkinpieQuantity = (EditText)findViewById(R.id.pumpkinpie_quantity);
+
+        if(hasCheesecake){
+            if (cheesecakeQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputCheesecake), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity1 = Integer.parseInt(cheesecakeQuantity.getText().toString());
+        }
+        if(hasPumpkinpie){
+            if (pumpkinpieQuantity.getText().toString().matches("")) {
+                Toast.makeText(this, getString(R.string.checkInputPumpkinpie), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            quantity2 = Integer.parseInt(pumpkinpieQuantity.getText().toString());
+        }
+
         // Calculate the price
-        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCheesecake,hasPumpkinpie);
+        int price = calculatePrice(hasWhippedCream,hasChocolate,hasCheesecake,hasPumpkinpie,quantity1,quantity2);
 
         // Display the price on the screen
         displayTotal(price);
@@ -158,7 +248,9 @@ public class NescafeActivity extends AppCompatActivity {
         priceMessage +="\n" + getString(R.string.order_summary_whipped_cream, addWhippedCream);
         priceMessage +="\n" + getString(R.string.order_summary_chocolate, addChocolate);
         priceMessage +="\n" + getString(R.string.order_summary_cheesecake, withCheesecake);
+        if(withCheesecake){priceMessage +="\n" + getString(R.string.order_summary_quantity_cheesecake, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_pumpkinpie, withPumpkinpie);
+        if(withPumpkinpie){priceMessage +="\n" + getString(R.string.order_summary_quantity_pumpkinpie, quantity1);}
         priceMessage +="\n" + getString(R.string.order_summary_price, NumberFormat.getCurrencyInstance().format(price));
         priceMessage +="\n" + getString(R.string.thanks);
         return priceMessage;
